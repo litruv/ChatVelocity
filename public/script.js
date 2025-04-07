@@ -45,7 +45,10 @@ class ChatApp {
     async fetch7TVEmotes(userId) {
         try {
             const response = await fetch(`https://7tv.io/v3/users/twitch/${userId}`);
-            if (!response.ok) throw new Error(`Error fetching 7TV emotes: ${response.status}`);
+            if (!response.ok) {
+                console.warn(`7TV emotes fetch failed with status ${response.status}. Continuing without 7TV emotes.`);
+                return {};
+            }
 
             const emotesData = await response.json();
             if (!emotesData?.emote_set?.emotes) return {};
