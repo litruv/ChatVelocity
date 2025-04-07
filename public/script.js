@@ -51,7 +51,10 @@ class ChatApp {
             }
 
             const emotesData = await response.json();
-            if (!emotesData?.emote_set?.emotes) return {};
+            if (!emotesData?.emote_set?.emotes) {
+                console.warn("7TV emotes data is null or does not contain emotes. Continuing without 7TV emotes.");
+                return {};
+            }
 
             return emotesData.emote_set.emotes.reduce((acc, emote) => {
                 acc[emote.name] = `https://cdn.7tv.app/emote/${emote.id}/1x.webp`;
